@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "moduleResolution": "Node",
+      "target": "es6",
+      "module": "commonjs",
+      "lib": ["esnext"],
+      "strict": true,
+      "declaration": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "declarationDir": "./dist",
+      "outDir": "./dist",
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modues"]
+  }

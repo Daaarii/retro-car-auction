@@ -1,0 +1,116 @@
+.car-card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0 10px 0;
+    width: 540px;
+    height: 160px;
+    border-radius: 7px;
+    transition: all .2s;
+}
+
+.car-card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.car__image {
+    width: 60%;
+}
+
+.car__image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 7px 0 0 7px;
+}
+
+.car-data {
+    width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: 1px solid #C0C0C0;
+    border-left: none;
+    border-radius: 0 7px 7px 0;
+    font-family: roboto;
+}
+
+.car-data span {
+    margin-bottom: 10px;
+}
+
+.car__delete-icon {
+    position: absolute;
+    right: 13px;
+    top: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #C0C0C0;
+}
+
+.car__delete-icon:hover {
+    transform: scale(1.2);
+    color: #000;
+}
+
+.car__delete-icon:active {
+    transform: scale(1);
+    color: #000;
+}
+
+.car__edit-icon {
+    position: absolute;
+    right: 30px;
+    top: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #C0C0C0;
+}
+
+.car__edit-icon:hover {
+    transform: scale(1.2);
+    color: #000;
+}
+
+.car__edit-icon:active {
+    transform: scale(1);
+    color: #000;
+}
+
+.car-data input {
+    margin-bottom: 7px;
+    outline: none;
+    border: 2px solid #C0C0C0;
+    border-radius: 5px;
+    transition: all .3s;
+}
+
+.car-data input:hover {
+    border: 2px solid #a5a3a3;
+}
+
+.car-data input:active, .add-car__item input:focus {
+    border: 2px solid #01939A;
+}
+
+.car__file:hover {
+    background: #006469;
+}
+
+.car__controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.car__ok-button, .car__cancel-button {
+    border: 1px solid #C0C0C0;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
+} 
+
+.car__ok-button:hover, .car__cancel-button:hover {
+    background: #017177;
+    color: #fff;
+} 
