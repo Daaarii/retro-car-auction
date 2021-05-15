@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Avatar, Button, Card, CardContent, CardHeader, CardActionArea, CardMedia, CardActions, Typography, makeStyles } from '@material-ui/core'
 
-import { ICar } from '../Store/CarStore'
+import { ICar } from '../store/CarStore'
 import DummyCar from '../../assets/dummy-car.png'
 import Car from '../../../../../../../../retroCars/alfa-romeo-c52.jpg'
 

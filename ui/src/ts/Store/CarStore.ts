@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import retroCarAuctionClient from '../api/retroCarAuctionClient'
+import RCAClient from '../api/retroCarAuctionClient'
 
 
 export interface ICar {
@@ -11,13 +11,6 @@ export interface ICar {
     country: string
     prodYear: number
     description: string,
-}
-
-interface ICars {
-    cars: ICar[]
-    error: Error
-
-    fetchCars: () => void
 }
 
 const cars = [
@@ -78,7 +71,7 @@ const cars = [
 ]
 
 
-class Cars implements ICars {
+class Cars {
     constructor() {
         makeAutoObservable(this)
     }
@@ -86,9 +79,9 @@ class Cars implements ICars {
     public cars: ICar[] = cars
     public error: Error = null
 
-    async fetchCars() {
+    fetchCars = async () => {
         try {
-            const data = await retroCarAuctionClient.getCars()
+            const data = await RCAClient.getCars()
             this.cars = await data.json()
         } catch(e) {
             this.error = e

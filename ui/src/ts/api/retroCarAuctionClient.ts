@@ -1,31 +1,86 @@
-import { ICar } from '../Store/CarStore'
-
-
-const apiUrl = 'http://localhost:3001'
+import { client, authClient } from '../utils/enhancedFetch'
+import { ISignInData, ISignUpData } from '../entities/auth'
+import { IAuctionData } from '../entities/auction'
 
 class RetroCarAuctionClient {
 
-    public getCars() {
-        return fetch(`${apiUrl}/cars`)
+    getCars() {
+        return client('cars')
     }
 
-    public addCar(data: FormData) {
-        return fetch(`${apiUrl}/cars/add_car`, {
+    addCar(data: FormData) {
+        return authClient('add_car', {
             method: 'POST',
             body: data,
         })
     }
 
-    public editCar(data: any) {
-        return fetch(`${apiUrl}/cars/edit_car`, {
+    editCar(data: any) {
+        return authClient('edit_car', {
             method: 'POST',
             body: data,
         })
     }
 
-    public deleteCar() {
-        return fetch(`${apiUrl}/deleteCar:id`, {
+    deleteCar() {
+        return client('deleteCar:id', {
             method: 'DELETE',
+        })
+    }
+
+    signUp(data: ISignUpData) {
+        const formData = new FormData()
+        for (const key in data) {
+            formData.append(`${key}`, data[key])
+        }
+
+        return client('auth/sign_up', {
+            method: 'POST',
+            body: formData,
+        })
+    }
+
+    signIn(data: ISignInData) {
+        return client('auth/sign_in', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        })
+    }
+
+    getUserData(userId: number) {
+        return authClient(`users/get_user_data/${userId}`)
+    }
+
+    getBrands() {
+        return client('cars/brands')
+    }
+
+    createAuction(data: IAuctionData) {
+        const formData = new FormData()
+        for (const key in data) {
+            if (key === 'carInfo') {
+                for (const key1 in data[key]) {
+                    if (key1 === 'files') {
+                        Array.from(data[key][key1]).forEach(file => formData.append('files', file))
+                    } else {
+                        // @ts-ignore
+                        formData.append(`${key}`, data[key][key1])
+                    }
+                }
+            } else {
+                // @ts-ignore
+                formData.append(`${key}`, data[key])
+            }
+        }
+
+        formData.forEach(console.log)
+
+        return authClient('auction/create_auction', {
+            method: 'POST',
+            body: formData,
         })
     }
 

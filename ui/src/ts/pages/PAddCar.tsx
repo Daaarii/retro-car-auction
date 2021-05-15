@@ -22,8 +22,6 @@ export const PAddCar = () => {
 
         retroCarAuctionClient.addCar(formData)
             .then(response => response.json())
-            .then(r => console.log('json', r))
-            .catch(console.log)
     }
 
     const handleImageLoad = () => {

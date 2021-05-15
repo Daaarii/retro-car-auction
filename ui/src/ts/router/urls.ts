@@ -4,5 +4,10 @@ export const urls = {
     cars: '/cars',
     newCar: '/new_car',
 
-    login: '/users/login'
+    signIn: '/users/sign_in',
+    signUp: '/users/sign_up',
+
+    userProfile: '/users/profile',
+
+    newAuction: '/new_auction',
 }

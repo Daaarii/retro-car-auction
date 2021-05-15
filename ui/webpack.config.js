@@ -16,18 +16,19 @@ const babelOptions = {
 
 module.exports = {
     entry: path.resolve(__dirname, 'src', 'ts', 'index.tsx'),
-    target: 'web',
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
     output: {
+        publicPath: '/',
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
     },
+    target: 'web',
 
     devServer: {
-        contentBase: './dist',
-        historyApiFallback: true
+        hot: true,
+        historyApiFallback: true,
     },
 
     module: {

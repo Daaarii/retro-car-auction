@@ -9,6 +9,11 @@ import Role from './roleModel'
 import UserRole from './userRoleModel'
 import Bid from './bidModel'
 
+import countries from '../countries'
+import brands from '../brands'
+
+const countryRecords = countries.map(country => ({ name: country }))
+
 function setEntityRelations() {
     Car.hasMany(CarInfo)
     
@@ -28,7 +33,7 @@ function setEntityRelations() {
 
     User.belongsToMany(Role, { through: UserRole })
     Role.belongsToMany(User, { through: UserRole })
-
+   
 }
 
 export { Auction, Brand, CarInfo, Car, Country, User, Role, setEntityRelations }

@@ -4,10 +4,11 @@ import { Container } from '@material-ui/core'
 import retroCarAuctionClient from '../api/retroCarAuctionClient'
 
 import { CarList } from '../components/CarList'
-import cars from '../Store/CarStore'
+import carStore from '../store/CarStore'
 
 
 export const PCars = () => {
+    const { cars } = carStore
 
     // useEffect(() => {
     //     retroCarAuctionClient.getCars()
@@ -17,7 +18,7 @@ export const PCars = () => {
 
     return (
         <Container maxWidth="lg">
-            <CarList />
+            <CarList cars={cars} />
         </Container>
     )
 

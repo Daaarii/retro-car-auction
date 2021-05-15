@@ -2,11 +2,13 @@ import { Router } from 'express'
 
 import carController from '../controllers/carController'
 
-const carsRouter = Router()
+import isAuth from '../middlewares/isAuth'
 
-carsRouter.get('/', carController.getCars)
+const router = Router()
 
-carsRouter.post('/add_car', carController.addCar)
-carsRouter.get('/', carController.getCars)
+router.get('/', carController.fetchCars)
 
-export default carsRouter
+router.post('/add_car', isAuth, carController.addCar)
+router.get('/brands', carController.fetchBrands)
+
+export default router

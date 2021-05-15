@@ -1,13 +1,15 @@
 import React from 'react'
-import { Box, Grid, Card, CardContent, CardHeader, CardMedia } from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
 
 import { CarCard } from './CarCard'
-import carStore from '../Store/CarStore'
+import { ICar } from '../store/CarStore'
 
+interface ICarListProps {
+    cars: ICar[],
+}
 
-export const CarList = () => {
+export const CarList = ({cars}: ICarListProps) => {
 
-    const { cars } = carStore
 
     return (
         <Box>

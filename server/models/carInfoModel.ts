@@ -18,11 +18,11 @@ CarInfoModel.init(
             allowNull: false,
         },
         title: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         description: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },

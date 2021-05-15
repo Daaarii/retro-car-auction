@@ -5,9 +5,13 @@ import sequelize from '../utils/database'
 
 class User extends Model {
     public id!: number
+    public firstName!: string
+    public lastName!: string
+    public nickname!: string
     public email!: string
     public password!: string
     public role!: string
+    public avatar!: string
 }
 
 User.init(
@@ -16,6 +20,18 @@ User.init(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
+            allowNull: false,
+        },
+        firstName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        nickname: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         email: {
@@ -29,6 +45,10 @@ User.init(
         role: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        avatar: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
     },
     {
