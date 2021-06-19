@@ -3,13 +3,13 @@ import { Model, DataTypes } from 'sequelize'
 import sequelize from '../utils/database'
 
 
-class BidModel extends Model {
+class Bid extends Model {
     public id!: number
     public price!: number
     public time!: string
 }
 
-BidModel.init(
+Bid.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -32,4 +32,4 @@ BidModel.init(
     }
 )
 
-export default BidModel
+export default Bid

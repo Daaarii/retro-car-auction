@@ -7,10 +7,10 @@ class Auction extends Model {
     public id!: number
     public status!: string
     public startTime!: string
-    public endTime!: string
     public startPrice!: number
     public minBid!: number
     public blitzPrice!: number
+    public winnerId!: number
 }
 
 Auction.init(
@@ -29,10 +29,6 @@ Auction.init(
             type: DataTypes.DATE,
             allowNull: false,
         },
-        endTime: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
         startPrice: {
             type: DataTypes.FLOAT,
             allowNull: false,
@@ -44,7 +40,11 @@ Auction.init(
         blitzPrice: {
             type: DataTypes.FLOAT,
             allowNull: true,
-        }
+        },
+        winnerId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
     },
     {
         tableName: 'Auctions',

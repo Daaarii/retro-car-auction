@@ -1,14 +1,16 @@
+import { RequestOptions } from 'https'
 import { Model, DataTypes } from 'sequelize'
 
 import sequelize from '../utils/database'
 
 
-class Brand extends Model {
+class Application extends Model {
     public id!: number
-    public name!: string
+    public status!: string
+    public applicationTime!: string
 }
 
-Brand.init(
+Application.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -16,15 +18,19 @@ Brand.init(
             primaryKey: true,
             allowNull: false,
         },
-        name: {
+        status: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        applicationTime: {
+            type: DataTypes.DATE,
             allowNull: false,
         },
     },
     {
-        tableName: 'Brands',
+        tableName: 'Applications',
         sequelize
     }
 )
 
-export default Brand
+export default Application

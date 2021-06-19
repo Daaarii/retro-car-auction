@@ -12,6 +12,7 @@ import storageConfig from './utils/fileStorage'
 import errorHandler from './middlewares/errorHandler'
 import { Brand, Country, setEntityRelations } from './models'
 
+
 setEntityRelations()
 
 const app = express()
@@ -38,16 +39,5 @@ sequelize
     .sync({ force: true })
     .then(() => {
         app.listen(process.env.PORT)
-
-        // Brand.bulkCreate(brands)
-        //     .then(res => console.log('ad', res))
-        //     .catch(err => console.log('errorr', err))
-
-        // Country.create({ name: 'Россия' }).then(res => Brand.create({ name: 'BMW', CountryId: res.id }).then(console.log).catch(console.log))
-
-        // Country.bulkCreate(countryRecords).then(() => Brand.bulkCreate(brandRecords)
-        //     .then(res => console.log('ad', res))
-        //     .catch(err => console.log('errorr', err))
-        // )
     })
     .catch (err => console.log(err))

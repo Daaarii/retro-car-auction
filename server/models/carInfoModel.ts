@@ -3,13 +3,13 @@ import { Model, DataTypes } from 'sequelize'
 import sequelize from '../utils/database'
 
 
-class CarInfoModel extends Model {
+class CarInfo extends Model {
     public id!: number
     public title!: string
     public description!: string
 }
 
-CarInfoModel.init(
+CarInfo.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -32,4 +32,4 @@ CarInfoModel.init(
     }
 )
 
-export default CarInfoModel
+export default CarInfo

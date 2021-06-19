@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 
 import { User } from '../models'
+import UserAuction from '../models/userAuctionModel'
 import ApiError from '../utils/apiError'
 
 
@@ -20,7 +21,10 @@ class UserController {
         try {
             const user = await User.findOne({ where: { id } })
 
-            res.json({ avatar: user!.avatar })
+            const userAuction = await UserAuction.findAll({where: { UserId: user!.id }}) as any
+            const auctionsUserParticipates = userAuction.map((item: any) => item.AuctionId)
+
+            res.json({ auctionsUserParticipates })
 
         } catch {
 

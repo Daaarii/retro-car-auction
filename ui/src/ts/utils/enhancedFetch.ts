@@ -9,10 +9,12 @@ const client = (path: string, options?: RequestInit) => {
 }
 
 const authClient = (path: string, options?: RequestInit) => {
+    const optionsHeaders = options?.headers || {}
     return fetch(`${apiUrl}${path}`, {
         ...options,
         headers: {
-            'Authorization': `bearer ${authStorage.getToken() || ''}`
+            ...optionsHeaders,
+            'Authorization': `bearer ${authStorage.getToken() || ''}`,
         }
     })
 }

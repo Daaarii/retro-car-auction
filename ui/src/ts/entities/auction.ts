@@ -49,31 +49,161 @@ export enum SteeringWheelLocation {
 interface ICarInfo {
     [key: string]: string | Rating | Fuel | Transmission | SteeringWheelLocation | FileList,
     historyOfTheCar: string
-        engineCapacity: string
-        carInteriorRating: Rating
-        numberOfDoors: string
-        carMileage: string
-        carColor: string
-        fuelType: Fuel
-        carInteriorColor: string
-        serviceLife: string
-        steeringWheelLocation: SteeringWheelLocation
-        transmission: Transmission
-        equipment: string
-        numberOfSeatsInTheCar: string
-        files: FileList
+    engineCapacity: string
+    carInteriorRating: Rating
+    numberOfDoors: string
+    carMileage: string
+    carColor: string
+    fuelType: Fuel
+    carInteriorColor: string
+    serviceLife: string
+    steeringWheelLocation: SteeringWheelLocation
+    transmission: Transmission
+    equipment: string
+    numberOfSeatsInTheCar: string
+    files: FileList
 }
 
-export interface IAuctionData {
+export interface IApplicationDataRequest {
     [key: string]: string | ICarInfo
     model: string
     brand: string
     prodYear: string
     carCondition: string
-    carInfo: ICarInfo
-    auctionStartTime: string
-    auctionEndTime: string
+    carInfo?: ICarInfo
+    applicationTime: string
     startPrice: string
     minBid: string
     blitzPrice?: string
+
+}
+
+export interface IAuctionDataRequest {
+    [key: string]: string | ICarInfo
+    model: string
+    brand: string
+    prodYear: string
+    carCondition: string
+    carInfo?: ICarInfo
+    auctionStartTime: string
+    startPrice: string
+    minBid: string
+    blitzPrice?: string
+}
+
+export enum AuctionStatus {
+    PENDING = 'Pending',
+    STARTED = 'Started',
+    ENDED = 'Ended',
+}
+
+export interface IRequestResponse {
+    CarId: number
+    UserId: number
+    blitzPrice?: number
+    createdAt: string
+    id: number
+    minBid: number
+    startPrice: number
+    applicationTime: string
+    status: AuctionStatus
+    updatedAt: string
+
+}
+
+export interface IAuctionResponse {
+    CarId: number
+    UserId: number
+    blitzPrice?: number
+    createdAt: string
+    id: number
+    minBid: number
+    startPrice: number
+    startTime: string
+    status: AuctionStatus
+    updatedAt: string
+}
+
+export interface ICarResponse {
+    BrandModalId: number
+    UserId: number
+    carCondition: number
+    createdAt: string
+    id: number
+    image: string[]
+    model: string
+    prodYear: number
+    updatedAt: string
+}
+
+export interface IUserResponse {
+    avatar: string
+    createdAt: string
+    email: string
+    firstName: string
+    id: number
+    lastName: string
+    nickname: string
+    role: string
+    updatedAt: string
+}
+
+export interface IAuctionsDataResponse {
+    auctions: IAuctionResponse[],
+    cars: ICarResponse[],   
+    users: IUserResponse[],
+}
+
+type CarInfo = { [key: string]: string }
+
+export interface IBidData {
+    auctionId: number,
+    userId: number,
+    bid: number,
+}
+
+export interface IBid {
+    id: number,
+    time: string,
+    price: number,
+}
+
+export interface IAuctionDataResponse {
+    auction: Partial<IAuctionResponse>,
+    car: Partial<ICarResponse>,
+    user: Partial<IUserResponse>,
+    carInfo: CarInfo[],
+    bids: IBid[],
+}
+
+export const mapVariablesToHuman = new Map(
+    [
+        ['historyOfTheCar', 'History of the car'],
+        ['engineCapacity', 'Engine capacity'],
+        ['carInteriorRating', 'Car interior rating'],
+        ['numberOfDoors', 'Number of doors'],
+        ['carMileage', 'Car mileage'],
+        ['carColor', 'Car color'],
+        ['fuelType', 'Fuel type'],
+        ['carInteriorColor', 'Car interior color'],
+        ['serviceLife', 'Service life'],
+        ['steeringWheelLocation', 'Steering wheel location'],
+        ['transmission', 'Transmission'],
+        ['equipment', 'Equipment'],
+        ['numberOfSeatsInTheCar', 'Number of seats in the car'],
+    ]
+)
+
+export interface ICountry {
+    country: string,
+}
+
+export interface IBrand {
+    brand: string,
+    countryId: number,
+}
+
+export interface IModel {
+    model: string,
+    brandId: number,
 }

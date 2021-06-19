@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 
 import RCAClient from '../api/retroCarAuctionClient'
-import { IAuctionData } from '../entities/auction'
+import { IApplicationDataRequest, IAuctionDataRequest, IBrand, ICountry, IModel } from '../entities/auction'
 import { ISignInData, ISignUpData } from '../entities/auth'
 
 import authStorage from '../utils/authStorage'
@@ -14,12 +14,13 @@ class User {
 
     loading: boolean = false
     error: Error = null
+    id: number = Number(authStorage.getUserid())
     isAuth: boolean = authStorage.getToken() && Date.now() < Number(authStorage.getExpiryDate())
+    role: string = 'admin'
     signUpFieldErrors: Record<string, string> = {}
     signInFieldErrors: Record<string, string> = {}
-    userData = {}
-    // createdAuctions = []
-    // otherAuctions = []
+    moneyBalance: number = 10000
+    auctionsUserParticipates: number[] = []
 
     signUp = async (data: ISignUpData) => {
         this.loading = true
@@ -49,24 +50,33 @@ class User {
                 const { token, expiryDate, userId } = await response.json()
                 authStorage.addToken(token, expiryDate, userId)
 
-                const userData = await RCAClient.getUserData(userId)
-                
+                await this.fetchUserData(userId)
+
                 this.autoLogout(Number(authStorage.getExpiryDate()) - Date.now())
                 this.isAuth = true
                 this.signInFieldErrors = {}
 
-                if (!userData.ok) {
-                    this.error = new Error()
-                } else {
-                    // const { avatar }  = await userData.json()
-                    // this.avatar = avatar
-                    return { redirect: true }
-                }
+                return { redirect: true }
             }
         } catch (err) {
             this.error = err
         } finally {
             this.loading = false
+        }
+    }
+
+    fetchUserData = async (userId: number) => {
+        try {
+            const responseUserData = await RCAClient.getUserData(userId)
+            if (!responseUserData.ok) {
+                this.error = new Error()
+            } else {
+                const { auctionsUserParticipates } = await responseUserData.json()
+                console.log('fetch', auctionsUserParticipates)
+                this.auctionsUserParticipates = auctionsUserParticipates || []
+            }
+        } catch (err) {
+            this.error = err
         }
     }
 
@@ -83,17 +93,109 @@ class User {
         }, ms)
     }
 
-    createAuction = async (auctionData: IAuctionData) => {
+    makeRequest = async (auctionData: IApplicationDataRequest) => {
         this.loading = true
         try {
-            const response = await RCAClient.createAuction(auctionData)
-            if (response.ok) {
+            const response = await RCAClient.makeRequest(auctionData)
+        } catch (err) {
+            this.error = err
+        } finally {
+            this.loading = false
+        }
+    }
 
+    // createAuction = async (auctionData: IAuctionDataRequest) => {
+    //     this.loading = true
+    //     try {
+    //         const response = await RCAClient.createAuction(auctionData)
+    //         if (response.ok) {
+    //             return {
+    //                 result: 0,
+    //             }
+    //         }
+    //     } catch (err) {
+    //         this.error = err
+    //     } finally {
+    //         this.loading = false
+    //     }
+    // }
+
+    acceptApplication = async (id: number, auctionStartTime: string) => {
+        try {
+            const response = await RCAClient.acceptApplication(id, auctionStartTime)
+            if (response.ok) {
+                return {
+                    result: 0,
+                }
             }
         } catch (err) {
             this.error = err
         } finally {
             this.loading = false
+        }
+    }
+
+    rejectApplication = async (id: number) => {
+        try {
+            const response = await RCAClient.rejectApplication(id)
+            if (response.ok) {
+                return {
+                    result: 0,
+                }
+            }
+        } catch (err) {
+            this.error = err
+        } finally {
+            this.loading = false
+        }
+    }
+
+    registerInAuction = async (userId: string, auctionId: string) => {
+        this.loading = true
+        try {
+            const response = await RCAClient.registerInAuction(userId, auctionId)
+            const { id } = await response.json()
+            this.auctionsUserParticipates.push(id)
+        } catch (err) {
+            this.error = err
+        } finally {
+            this.loading = false
+        }
+    }
+
+    addCountry = async (data: ICountry) => {
+        try {
+            const response = await RCAClient.addCountry(data)
+            if (response.ok) {
+                return { result: 0 }
+            }
+            return { result: 1 }
+        } catch (err) {
+            this.error = err
+        }
+    }
+
+    addBrand = async (data: IBrand) => {
+        try {
+            const response = await RCAClient.addBrand(data)
+            if (response.ok) {
+                return { result: 0 }
+            }
+            return { result: 1 }
+        } catch (err) {
+            this.error = err
+        }
+    }
+
+    addModel = async (data: IModel) => {
+        try {
+            const response = await RCAClient.addModel(data)
+            if (response.ok) {
+                return { result: 0 }
+            }
+            return { result: 1 }
+        } catch (err) {
+            this.error = err
         }
     }
 

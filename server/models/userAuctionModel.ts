@@ -3,11 +3,11 @@ import { Model, DataTypes } from 'sequelize'
 import sequelize from '../utils/database'
 
 
-class UserRoleModel extends Model {
+class UserAuction extends Model {
     public id!: number
 }
 
-UserRoleModel.init(
+UserAuction.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -17,9 +17,9 @@ UserRoleModel.init(
         },
     },
     {
-        tableName: 'UsersRoles',
+        tableName: 'UsersAuctions',
         sequelize
     }
 )
 
-export default UserRoleModel
+export default UserAuction

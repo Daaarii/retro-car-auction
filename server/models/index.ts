@@ -3,11 +3,10 @@ import Brand from './brandModel'
 import CarInfo from './carInfoModel'
 import Car from './carModel'
 import Country from './countryModel'
-import UserAction from './userActionModel'
+import UserAuction from './userAuctionModel'
 import User from './userModel'
-import Role from './roleModel'
-import UserRole from './userRoleModel'
 import Bid from './bidModel'
+import Application from './applicationModel'
 
 import countries from '../countries'
 import brands from '../brands'
@@ -16,24 +15,23 @@ const countryRecords = countries.map(country => ({ name: country }))
 
 function setEntityRelations() {
     Car.hasMany(CarInfo)
-    
+    Car.hasOne(Auction)
+
     Brand.hasMany(Car)
     
-    Auction.hasOne(Car)
+    Auction.hasOne(Application)
     Auction.hasMany(Bid)
     
     Country.hasMany(Brand)
     
     User.hasMany(Car)
     User.hasMany(Auction)
+    User.hasMany(Application)
     User.hasMany(Bid)
     
-    User.belongsToMany(Auction, { through: UserAction })
-    Auction.belongsToMany(User, { through: UserAction })
-
-    User.belongsToMany(Role, { through: UserRole })
-    Role.belongsToMany(User, { through: UserRole })
+    User.belongsToMany(Auction, { through: UserAuction })
+    Auction.belongsToMany(User, { through: UserAuction })
    
 }
 
-export { Auction, Brand, CarInfo, Car, Country, User, Role, setEntityRelations }
+export { Auction, Bid, Brand, CarInfo, Car, Country, User, Application, setEntityRelations }

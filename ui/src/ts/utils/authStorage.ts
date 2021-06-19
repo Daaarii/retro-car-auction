@@ -15,6 +15,10 @@ class AuthStorage {
         return localStorage.getItem('expiryDate')
     }
 
+    getUserid() {
+        return localStorage.getItem('userId')
+    }
+
     clear() {
         localStorage.removeItem('token')
         localStorage.removeItem('expiryDate')

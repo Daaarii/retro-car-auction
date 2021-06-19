@@ -1,3 +1,5 @@
+import { IUseInputWithValidation } from '../hooks/useInputWithValidation'
+
 export const getValidationProps = (
     { value, onChange, onBlur, errorMessages, isBlur, isValid }: IUseInputWithValidation,
     serverValidationInfo?: string,

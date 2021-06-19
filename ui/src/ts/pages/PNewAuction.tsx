@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import { Button, Chip, Container, Grid, Typography, makeStyles, TextField, Slider, FormControl, Select, InputLabel, MenuItem, List, ListItem, Divider, Input } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
@@ -90,8 +90,7 @@ export const PNewAuction = () => {
     const [equipment, setEquipment] = useState([Equipment.Nothing])
     const numberOfSeatsInTheCar = useInputWithValidation({ isEmpty: true })
     const photos = useUpload(true)
-    const auctionStartTime = useInput(dayjs().format('YYYY-MM-DDTHH:mm:ss'))
-    const auctionEndTime = useInput(dayjs(Date.now() + 60 ** 2 * 1000).format('YYYY-MM-DDTHH:mm:ss'))
+    const timeOfApplication = useRef(dayjs().format('YYYY-MM-DDTHH:mm:ss'))
     const startPrice = useInputWithValidation({ isEmpty: true })
     const minBid = useInputWithValidation({ isEmpty: true })
     const blitzPrice = useInput()
@@ -116,10 +115,10 @@ export const PNewAuction = () => {
     }
 
     const checkBasicCharacteristics = () => {
-        // if (Number(prodYear) > 1990 || carCondition < 6 || !brands.includes(brand)) {
+        if (Number(prodYear) > 1990 || carCondition < 6) {
             return false
-        // }
-        // return true
+        }
+        return true
     }
 
     const isSecondStepDisabled = () => {
@@ -156,8 +155,8 @@ export const PNewAuction = () => {
         setOpen(false)
     }
 
-    const handleCreateAuction = () => {
-        return userStore.createAuction(dumbAuction)
+    const handleMakeARequest = () => {
+        return userStore.makeRequest(dumbAuction)
         // return userStore.createAuction({
         //     model: model.value,
         //     brand,
@@ -177,8 +176,7 @@ export const PNewAuction = () => {
         //     equipment: equipment.join(','),
         //     numberOfSeatsInTheCar: numberOfSeatsInTheCar.value,
         //     files: photos.value as FileList,
-        //     auctionStartTime: auctionStartTime.value,
-        //     auctionEndTime: auctionEndTime.value,
+        //     timeOfApplication: timeOfApplication.current,
         //     startPrice: startPrice.value,
         //     minBid: minBid.value,
         //     blitzPrice: blitzPrice.value ? blitzPrice.value : undefined,
@@ -611,32 +609,16 @@ export const PNewAuction = () => {
                     <Grid item container spacing={2} alignItems="center" justify="space-between">
                         <Grid item xs={12} sm={6}>
                             <Typography className={classes.fieldTitle} variant="body1">
-                                Auction start time
+                                Time of application
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                value={auctionStartTime.value}
-                                onChange={auctionStartTime.onChange}
+                                value={timeOfApplication.current}
                                 variant="outlined"
                                 size="small"
                                 type="datetime-local"
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid item container spacing={2} alignItems="center" justify="space-between">
-                        <Grid item xs={12} sm={6}>
-                            <Typography className={classes.fieldTitle} variant="body1">
-                                Auction end time
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                value={auctionEndTime.value}
-                                onChange={auctionEndTime.onChange}
-                                variant="outlined"
-                                size="small"
-                                type="datetime-local"
+                                disabled
                             />
                         </Grid>
                     </Grid>
@@ -703,9 +685,9 @@ export const PNewAuction = () => {
                             size="large"
                             color="primary"
                             // disabled={isThirdStepDisabled()}
-                            onClick={handleCreateAuction}
+                            onClick={handleMakeARequest}
                         >
-                            Create Auction
+                            Make a request
                         </Button>
                     </Grid>
                 </Grid>
